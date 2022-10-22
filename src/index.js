@@ -13,7 +13,12 @@ root.render(
     <Search />
     <Forecast />
     <App />
-    <p className="createdBy">Created by Angel Leung</p>
+    <p className="createdBy">
+      Created by Angel Leung. View on{" "}
+      <a href="https://github.com/angelmb/weather-react" target="blank">
+        Github
+      </a>
+    </p>
   </React.StrictMode>
 );
 
