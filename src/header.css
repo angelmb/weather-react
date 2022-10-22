@@ -1,0 +1,38 @@
+header {
+  padding: 60px 0px 20px 0px;
+}
+
+header h1 {
+  color: #005874;
+  font-weight: 900;
+  font-size: 48px;
+}
+
+header input {
+  border-radius: 24px;
+  line-height: 36px;
+  padding: 5px 20px;
+  margin: 20px 0 0;
+  width: 100%;
+  border-color: #1989ac;
+  border-style: solid;
+  background-color: #faf5e4;
+}
+
+button.currentLoc {
+  background-color: #1989ac;
+  color: #ffffff;
+  padding: 8px 20px;
+  border-radius: 8px;
+  margin: 25px auto;
+  font-family: "Source Sans Pro", san-serif;
+  border-style: none;
+  transition: all 200ms ease-in-out;
+}
+.alignRight {
+  text-align: right;
+}
+button:hover {
+  background-color: #005874;
+  cursor: pointer;
+}

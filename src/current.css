@@ -1,0 +1,80 @@
+.currentWeather {
+  border-style: solid;
+  border-radius: 18px;
+  border-color: #faf5e4;
+  background-color: #faf5e4;
+  padding: 20px 30px;
+  margin: 10px 0;
+}
+
+.top {
+  padding: 10px 0px 20px;
+}
+
+h5.date {
+  text-align: right;
+  color: #283e56;
+  font-size: 20px;
+}
+
+span.unit {
+  color: #283e56;
+  font-size: 16px;
+}
+
+.currentTemp {
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+  padding: 15px 0px 10px;
+}
+.verticalDivider {
+  border-right: thin solid #e6e6d4;
+  margin: 20px 0;
+}
+
+.verticalDividerHidden {
+  border-right: thin solid #faf5e4;
+  margin: 20px 0;
+}
+
+.currentTemp img {
+  width: 90px;
+}
+.currentTemp h1 {
+  font-weight: 600;
+  font-size: 40px;
+  color: #283e56;
+}
+
+a {
+  color: #283e56;
+}
+a:hover {
+  color: #1989ac;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+}
+
+.label {
+  padding: 20px 0px 10px 30px;
+}
+
+.value {
+  padding: 20px 20px 10px 10px;
+}
+
+li {
+  padding: 10px 0px;
+}
+li label {
+  line-height: 24px;
+}
+li h5 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
