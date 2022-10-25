@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import "./header.css";
 import "./current.css";
+import CurrentTime from "./CurrentTime";
 import axios from "axios";
 
-export default function Search() {
+export default function Current() {
   const [city, setCity] = useState("");
   const [returned, setReturned] = useState(false);
   const [weather, setWeather] = useState({});
@@ -122,6 +123,7 @@ export default function Search() {
   function showWeather(response) {
     setReturned(true);
     setWeather({
+      date: new Date(response.data.dt * 1000),
       temperature: Math.round(response.data.main.temp),
       wind: response.data.wind.speed,
       humidity: response.data.main.humidity,
@@ -135,8 +137,10 @@ export default function Search() {
             <div className="row">
               <div className="col-9">
                 <h2>Current Weather</h2>
-                <h4 className="location">{city}</h4>
-                <h4 className="time">09:35am</h4>
+                <h4>{city}</h4>
+                <h4>
+                  <CurrentTime returnDate={weather.date} />
+                </h4>
               </div>
 
               <div className="col-3">

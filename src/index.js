@@ -3,14 +3,14 @@ import ReactDOM from "react-dom/client";
 import "./styles.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import Search from "./Search";
+import Current from "./Current";
 
 import Forecast from "./Forecast";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Search />
+    <Current />
     <Forecast />
     <App />
     <p className="createdBy">
