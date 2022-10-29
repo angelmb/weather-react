@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import FormatDate from "./FormatDate";
 import "./header.css";
 import "./current.css";
 
@@ -12,13 +13,13 @@ export default function Current() {
     <div className="currentWeather">
       <div className="top">
         <div className="row">
-          <div className="col-9">
+          <div className="col-8">
             <h2>Current Weather</h2>
             <h4 className="location">New York</h4>
           </div>
 
-          <div className="col-3">
-            <h5 className="date">October 21, 2022 9:05am</h5>
+          <div className="col-4">
+            <FormatDate date={new Date()} />
           </div>
         </div>
       </div>
@@ -130,17 +131,18 @@ export default function Current() {
       description: response.data.weather[0].description,
     });
     if (returned) {
+      console.log(weather.date);
       setCurrentCity(
         <div className="currentWeather">
           <div className="top">
             <div className="row">
-              <div className="col-9">
+              <div className="col-8">
                 <h2>Current Weather</h2>
                 <h4>{city}</h4>
               </div>
 
-              <div className="col-3">
-                <h5 className="date">October 21, 2022 9:05am</h5>
+              <div className="col-4">
+                <FormatDate date={weather.date} />
               </div>
             </div>
           </div>
@@ -237,7 +239,7 @@ export default function Current() {
       <header>
         <h1>Weather Forecast</h1>
         <div className="row">
-          <div className="col">
+          <div className="col-8">
             <form onSubmit={handleSubmit}>
               <input
                 type="search"
@@ -248,7 +250,7 @@ export default function Current() {
               <button className="search">Search</button>
             </form>
           </div>
-          <div className="col">
+          <div className="col-4">
             <div className="alignRight">
               <button>Current location</button>
             </div>

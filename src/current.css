@@ -16,6 +16,11 @@ h5.date {
   color: #283e56;
   font-size: 20px;
 }
+h5.time {
+  text-align: right;
+  color: #283e56;
+  font-size: 20px;
+}
 
 span.unit {
   color: #283e56;
