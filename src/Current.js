@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./header.css";
 import "./current.css";
-import CurrentTime from "./CurrentTime";
+
 import axios from "axios";
 
 export default function Current() {
@@ -15,11 +15,10 @@ export default function Current() {
           <div className="col-9">
             <h2>Current Weather</h2>
             <h4 className="location">New York</h4>
-            <h4 className="time">09:36am</h4>
           </div>
 
           <div className="col-3">
-            <h5 className="date">October 21, 2022</h5>
+            <h5 className="date">October 21, 2022 9:05am</h5>
           </div>
         </div>
       </div>
@@ -138,13 +137,10 @@ export default function Current() {
               <div className="col-9">
                 <h2>Current Weather</h2>
                 <h4>{city}</h4>
-                <h4>
-                  <CurrentTime returnDate={weather.date} />
-                </h4>
               </div>
 
               <div className="col-3">
-                <h5 className="date">October 21, 2022</h5>
+                <h5 className="date">October 21, 2022 9:05am</h5>
               </div>
             </div>
           </div>
@@ -244,17 +240,17 @@ export default function Current() {
           <div className="col">
             <form onSubmit={handleSubmit}>
               <input
-                className="searchBar"
                 type="search"
                 id="search-input"
                 placeholder="Search by city or zip code"
                 onChange={updateCity}
               />
+              <button className="search">Search</button>
             </form>
           </div>
           <div className="col">
             <div className="alignRight">
-              <button className="currentLoc">Current location</button>
+              <button>Current location</button>
             </div>
           </div>
         </div>
