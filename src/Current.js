@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import FormatDate from "./FormatDate";
+import UpdateUnit from "./UpdateUnit";
 import "./header.css";
 import "./current.css";
 
@@ -31,10 +32,7 @@ export default function Current() {
                 src="https://ssl.gstatic.com/onebox/weather/64/sunny.png"
                 alt="Sunny"
               />
-              <h1>21</h1>
-              <span className="unit">
-                <a href="..">°C</a> <a href="..">°F</a>
-              </span>
+              <UpdateUnit temp={22} />
             </div>
           </div>
           <div className="col verticalDivider">
@@ -131,7 +129,6 @@ export default function Current() {
       description: response.data.weather[0].description,
     });
     if (returned) {
-      console.log(weather.date);
       setCurrentCity(
         <div className="currentWeather">
           <div className="top">
@@ -151,10 +148,7 @@ export default function Current() {
               <div className="col-3 verticalDivider">
                 <div className="currentTemp">
                   <img src={weather.icon} alt={weather.description} />
-                  <h1>{weather.temperature}</h1>
-                  <span className="unit">
-                    <a href="..">°C</a> <a href="..">°F</a>
-                  </span>
+                  <UpdateUnit temp={weather.temperature} />
                 </div>
               </div>
               <div className="col verticalDivider">
