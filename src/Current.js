@@ -10,7 +10,7 @@ export default function Current() {
   const [city, setCity] = useState("");
   const [returned, setReturned] = useState(false);
   const [weather, setWeather] = useState({});
-  const [currentCity, setCurrentCity] = useState(
+  let currentCity = (
     <div className="currentWeather">
       <div className="top">
         <div className="row">

@@ -3,32 +3,27 @@ import "./forecast.css";
 import axios from "axios";
 
 export default function ForecastPerDay(props) {
-  function showForecast(response) {
-    console.log(response.data);
+  function maxTemp() {
+    let maxTemp = Math.round(props.data.temp.max);
+    return `${temperature}°`;
   }
-  let apiKey = `5f472b7acba333cd8a035ea85a0d4d4c`;
-  let lat = props.coordinates.lat;
-  let lon = props.coordinates.lon;
-  let url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=alerts&appid=${apiKey}`;
-  axios.get(url).then(showForecast);
 
-  let forecastData = {
-    templow: 62,
-    temphigh: 74,
-    date: "7/31 Sun",
-    description: "Sunny",
-    imgUrl: "https://ssl.gstatic.com/onebox/weather/64/sunny.png",
-  };
-
+  function minTemp() {
+    let maxTemp = Math.round(props.data.temp.min);
+    return `${temperature}°`;
+  }
   return (
-    <div className="col">
-      <h6 className="futureDate">{forecastData.date}</h6>
+    <div className="forecastDay">
+      <h6 className="futureDate">{props.data.dt}</h6>
 
-      <img src={forecastData.imgUrl} alt={forecastData.description} />
+      <img
+        src={props.data.weather[0].icon}
+        alt={props.data.weather[0].description}
+      />
       <h5>
-        <strong>{forecastData.templow}</strong> / {forecastData.temphigh}° F
+        <strong>{minTemp()}</strong> / {maxTemp()}° F
       </h5>
-      <h6>{forecastData.description}</h6>
+      <h6>{props.data.weather[0].description}</h6>
     </div>
   );
 }
