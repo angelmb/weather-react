@@ -1,7 +1,17 @@
 import React from "react";
 import "./forecast.css";
+import axios from "axios";
 
-export default function ForecastPerDay() {
+export default function ForecastPerDay(props) {
+  function showForecast(response) {
+    console.log(response.data);
+  }
+  let apiKey = `5f472b7acba333cd8a035ea85a0d4d4c`;
+  let lat = props.coordinates.lat;
+  let lon = props.coordinates.lon;
+  let url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=alerts&appid=${apiKey}`;
+  axios.get(url).then(showForecast);
+
   let forecastData = {
     templow: 62,
     temphigh: 74,

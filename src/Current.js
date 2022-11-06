@@ -121,6 +121,7 @@ export default function Current() {
   function showWeather(response) {
     setReturned(true);
     setWeather({
+      city: response.data.name,
       date: new Date(response.data.dt * 1000),
       temperature: Math.round(response.data.main.temp),
       wind: response.data.wind.speed,
@@ -128,14 +129,38 @@ export default function Current() {
       icon: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
       description: response.data.weather[0].description,
     });
-    if (returned) {
-      setCurrentCity(
+  }
+
+  if (returned) {
+    return (
+      <div>
+        <header>
+          <h1>Weather Forecast</h1>
+          <div className="row">
+            <div className="col-8">
+              <form onSubmit={handleSubmit}>
+                <input
+                  type="search"
+                  id="search-input"
+                  placeholder="Search by city or zip code"
+                  onChange={updateCity}
+                />
+                <button className="search">Search</button>
+              </form>
+            </div>
+            <div className="col-4">
+              <div className="alignRight">
+                <button>Current location</button>
+              </div>
+            </div>
+          </div>
+        </header>
         <div className="currentWeather">
           <div className="top">
             <div className="row">
               <div className="col-8">
                 <h2>Current Weather</h2>
-                <h4>{city}</h4>
+                <h4>{weather.city}</h4>
               </div>
 
               <div className="col-4">
@@ -221,37 +246,34 @@ export default function Current() {
             </div>
           </div>
         </div>
-      );
-      return currentCity;
-    } else {
-      return currentCity;
-    }
-  }
-
-  return (
-    <div>
-      <header>
-        <h1>Weather Forecast</h1>
-        <div className="row">
-          <div className="col-8">
-            <form onSubmit={handleSubmit}>
-              <input
-                type="search"
-                id="search-input"
-                placeholder="Search by city or zip code"
-                onChange={updateCity}
-              />
-              <button className="search">Search</button>
-            </form>
-          </div>
-          <div className="col-4">
-            <div className="alignRight">
-              <button>Current location</button>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <header>
+          <h1>Weather Forecast</h1>
+          <div className="row">
+            <div className="col-8">
+              <form onSubmit={handleSubmit}>
+                <input
+                  type="search"
+                  id="search-input"
+                  placeholder="Search by city or zip code"
+                  onChange={updateCity}
+                />
+                <button className="search">Search</button>
+              </form>
+            </div>
+            <div className="col-4">
+              <div className="alignRight">
+                <button>Current location</button>
+              </div>
             </div>
           </div>
-        </div>
-      </header>
-      {currentCity}
-    </div>
-  );
+        </header>
+        {currentCity}
+      </div>
+    );
+  }
 }
