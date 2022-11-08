@@ -1,57 +1,54 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./forecast.css";
 import axios from "axios";
-import ForecastPerDay from "/ForecastPerDay";
+import ForecastByDay from "./ForecastByDay";
+
 export default function Forecast(props) {
   let [loaded, setLoaded] = useState(false);
   let [forecast, setForecast] = useState({});
 
-  let apiKey = `c819171fe0abdc14039af4ef5dda283b`;
-  let lat = props.coord.lat;
-  let lon = props.coord.lon;
-  let url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=alerts&appid=${apiKey}`;
-  axios.get(url).then(showForecast);
+  useEffect(() => {
+    setLoaded(false);
+  }, [props.coord]);
 
   function showForecast(response) {
     setForecast(response.data.daily);
     setLoaded(true);
+  }
 
-    if (loaded) {
-      console.log(forecast);
-      return (
-        <div className="fiveDayWeather">
-          <h2>5 Day Weather</h2>
-          <div className="foreCast">
-            <div className="row">
-              <div className="col">
-                <ForecastPerDay data={forecast[0]} />
-              </div>
-            </div>
+  function apiCall() {
+    let apiKey = `5f472b7acba333cd8a035ea85a0d4d4c`;
+    let lat = props.coord.lat;
+    let lon = props.coord.lon;
+    let unit = "metric";
+    let url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=alerts&appid=${apiKey}&units=${unit}`;
+    axios.get(url).then(showForecast);
+  }
+  if (loaded) {
+    console.log(forecast);
+    return (
+      <div className="fiveDayWeather">
+        <h2>5 Day Weather</h2>
+        <div className="foreCast">
+          <div className="row">
+            {forecast.map(function (dailyForecast, index) {
+              if (index < 5) {
+                return (
+                  <div className="col" key={index}>
+                    <ForecastByDay data={dailyForecast} />
+                  </div>
+                );
+              } else {
+                return null;
+              }
+            })}
           </div>
         </div>
-      );
-    } else {
-      return (
-        <div className="fiveDayWeather">
-          <h2>5 Day Weather</h2>
-          <div className="foreCast">
-            <div className="row">
-              <div className="col">
-                <h6 className="futureDate">Nov 3</h6>
+      </div>
+    );
+  } else {
+    apiCall();
 
-                <img
-                  src="	http://openweathermap.org/img/wn/01d@2x.png"
-                  alt="Sunny"
-                />
-                <h5>
-                  <strong>18</strong> / 23° C
-                </h5>
-                <h6>Sunny</h6>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    }
+    return null;
   }
 }

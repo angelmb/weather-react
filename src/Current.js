@@ -1,109 +1,117 @@
 import React, { useState } from "react";
 import FormatDate from "./FormatDate";
 import UpdateUnit from "./UpdateUnit";
+import Forecast from "./Forecast";
+
 import "./header.css";
 import "./current.css";
 
 import axios from "axios";
 
 export default function Current() {
-  const [city, setCity] = useState("");
+  const [city, setCity] = useState("New York");
   const [returned, setReturned] = useState(false);
   const [weather, setWeather] = useState({});
+
+  let defaultCoord = { lat: 40.73061, lon: -73.935242 };
+
   let currentCity = (
-    <div className="currentWeather">
-      <div className="top">
-        <div className="row">
-          <div className="col-8">
-            <h2>Current Weather</h2>
-            <h4 className="location">New York</h4>
-          </div>
-
-          <div className="col-4">
-            <FormatDate date={new Date()} />
-          </div>
-        </div>
-      </div>
-      <div className="bottom">
-        <div className="row">
-          <div className="col-3 verticalDivider">
-            <div className="currentTemp">
-              <img
-                src="https://ssl.gstatic.com/onebox/weather/64/sunny.png"
-                alt="Sunny"
-              />
-              <UpdateUnit temp={22} />
+    <div className="currentAndForecast">
+      <div className="currentWeather">
+        <div className="top">
+          <div className="row">
+            <div className="col-8">
+              <h2>Current Weather</h2>
+              <h4 className="location">{city}</h4>
             </div>
-          </div>
-          <div className="col verticalDivider">
-            <div className="row">
-              <div className="col-6">
-                <ul className="label">
-                  <li>
-                    <label>HUMIDITY</label>
-                  </li>
-                  <li>
-                    <label>WIND</label>
-                  </li>
-                  <li>
-                    <label>RAIN</label>
-                  </li>
-                </ul>
-              </div>
-              <div className="col-6">
-                <ul className="value">
-                  <li>
-                    <h5>
-                      <span>34</span>%
-                    </h5>
-                  </li>
-                  <li>
-                    <h5>
-                      <span>2.3</span> mph
-                    </h5>
-                  </li>
-                  <li>
-                    <h5>
-                      <span>18</span>%
-                    </h5>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
 
-          <div className="col verticalDividerHidden">
-            <div className="row">
-              <div className="col-6">
-                <ul className="label">
-                  <li>
-                    <label>SUNRISE</label>
-                  </li>
-                  <li>
-                    <label>SUNSET</label>
-                  </li>
-                  <li>
-                    <label>UV INDEX</label>
-                  </li>
-                </ul>
-              </div>
-              <div className="col-6">
-                <ul className="value">
-                  <li>
-                    <h5>05:30 am</h5>
-                  </li>
-                  <li>
-                    <h5>08:12 pm</h5>
-                  </li>
-                  <li>
-                    <h5>3 of 10</h5>
-                  </li>
-                </ul>
-              </div>
+            <div className="col-4">
+              <FormatDate date={new Date()} />
             </div>
           </div>
         </div>
+        <div className="bottom">
+          <div className="row">
+            <div className="col-3 verticalDivider">
+              <div className="currentTemp">
+                <img
+                  src="https://ssl.gstatic.com/onebox/weather/64/sunny.png"
+                  alt="Sunny"
+                />
+                <UpdateUnit temp={22} />
+              </div>
+            </div>
+            <div className="col verticalDivider">
+              <div className="row">
+                <div className="col-6">
+                  <ul className="label">
+                    <li>
+                      <label>HUMIDITY</label>
+                    </li>
+                    <li>
+                      <label>WIND</label>
+                    </li>
+                    <li>
+                      <label>RAIN</label>
+                    </li>
+                  </ul>
+                </div>
+                <div className="col-6">
+                  <ul className="value">
+                    <li>
+                      <h5>
+                        <span>34</span>%
+                      </h5>
+                    </li>
+                    <li>
+                      <h5>
+                        <span>2.3</span> mph
+                      </h5>
+                    </li>
+                    <li>
+                      <h5>
+                        <span>18</span>%
+                      </h5>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="col verticalDividerHidden">
+              <div className="row">
+                <div className="col-6">
+                  <ul className="label">
+                    <li>
+                      <label>SUNRISE</label>
+                    </li>
+                    <li>
+                      <label>SUNSET</label>
+                    </li>
+                    <li>
+                      <label>UV INDEX</label>
+                    </li>
+                  </ul>
+                </div>
+                <div className="col-6">
+                  <ul className="value">
+                    <li>
+                      <h5>05:30 am</h5>
+                    </li>
+                    <li>
+                      <h5>08:12 pm</h5>
+                    </li>
+                    <li>
+                      <h5>3 of 10</h5>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      <Forecast coord={defaultCoord} />
     </div>
   );
 
@@ -120,7 +128,9 @@ export default function Current() {
 
   function showWeather(response) {
     setReturned(true);
+    console.log(response.data);
     setWeather({
+      coordinates: response.data.coord,
       city: response.data.name,
       date: new Date(response.data.dt * 1000),
       temperature: Math.round(response.data.main.temp),
@@ -155,96 +165,99 @@ export default function Current() {
             </div>
           </div>
         </header>
-        <div className="currentWeather">
-          <div className="top">
-            <div className="row">
-              <div className="col-8">
-                <h2>Current Weather</h2>
-                <h4>{weather.city}</h4>
-              </div>
-
-              <div className="col-4">
-                <FormatDate date={weather.date} />
-              </div>
-            </div>
-          </div>
-          <div className="bottom">
-            <div className="row">
-              <div className="col-3 verticalDivider">
-                <div className="currentTemp">
-                  <img src={weather.icon} alt={weather.description} />
-                  <UpdateUnit temp={weather.temperature} />
+        <div className="currentAndForecast">
+          <div className="currentWeather">
+            <div className="top">
+              <div className="row">
+                <div className="col-8">
+                  <h2>Current Weather</h2>
+                  <h4>{weather.city}</h4>
                 </div>
-              </div>
-              <div className="col verticalDivider">
-                <div className="row">
-                  <div className="col-6">
-                    <ul className="label">
-                      <li>
-                        <label>HUMIDITY</label>
-                      </li>
-                      <li>
-                        <label>WIND</label>
-                      </li>
-                      <li>
-                        <label>RAIN</label>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="col-6">
-                    <ul className="value">
-                      <li>
-                        <h5>
-                          <span>{weather.humidity}</span>%
-                        </h5>
-                      </li>
-                      <li>
-                        <h5>
-                          <span>{weather.wind}</span> mph
-                        </h5>
-                      </li>
-                      <li>
-                        <h5>
-                          <span>15</span>%
-                        </h5>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
 
-              <div className="col verticalDividerHidden">
-                <div className="row">
-                  <div className="col-6">
-                    <ul className="label">
-                      <li>
-                        <label>SUNRISE</label>
-                      </li>
-                      <li>
-                        <label>SUNSET</label>
-                      </li>
-                      <li>
-                        <label>UV INDEX</label>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="col-6">
-                    <ul className="value">
-                      <li>
-                        <h5>05:30 am</h5>
-                      </li>
-                      <li>
-                        <h5>08:12 pm</h5>
-                      </li>
-                      <li>
-                        <h5>3 of 10</h5>
-                      </li>
-                    </ul>
-                  </div>
+                <div className="col-4">
+                  <FormatDate date={weather.date} />
                 </div>
               </div>
             </div>
+            <div className="bottom">
+              <div className="row">
+                <div className="col-3 verticalDivider">
+                  <div className="currentTemp">
+                    <img src={weather.icon} alt={weather.description} />
+                    <UpdateUnit temp={weather.temperature} />
+                  </div>
+                </div>
+                <div className="col verticalDivider">
+                  <div className="row">
+                    <div className="col-6">
+                      <ul className="label">
+                        <li>
+                          <label>HUMIDITY</label>
+                        </li>
+                        <li>
+                          <label>WIND</label>
+                        </li>
+                        <li>
+                          <label>RAIN</label>
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="col-6">
+                      <ul className="value">
+                        <li>
+                          <h5>
+                            <span>{weather.humidity}</span>%
+                          </h5>
+                        </li>
+                        <li>
+                          <h5>
+                            <span>{weather.wind}</span> mph
+                          </h5>
+                        </li>
+                        <li>
+                          <h5>
+                            <span>15</span>%
+                          </h5>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col verticalDividerHidden">
+                  <div className="row">
+                    <div className="col-6">
+                      <ul className="label">
+                        <li>
+                          <label>SUNRISE</label>
+                        </li>
+                        <li>
+                          <label>SUNSET</label>
+                        </li>
+                        <li>
+                          <label>UV INDEX</label>
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="col-6">
+                      <ul className="value">
+                        <li>
+                          <h5>05:30 am</h5>
+                        </li>
+                        <li>
+                          <h5>08:12 pm</h5>
+                        </li>
+                        <li>
+                          <h5>3 of 10</h5>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+          <Forecast coord={weather.coordinates} />
         </div>
       </div>
     );
